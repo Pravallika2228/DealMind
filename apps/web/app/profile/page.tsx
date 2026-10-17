@@ -54,8 +54,8 @@ export default function ProfilePage() {
       })
       .catch(() => {
         // Fallback to cached user
-        setUser(u as User);
-        setDisplayName((u as User).displayName || "");
+        setUser(u as unknown as User);
+        setDisplayName((u as unknown as User).displayName || "");
       });
   }, [router]);
 
@@ -81,7 +81,10 @@ export default function ProfilePage() {
       const data = await res.json();
       if (data.success) {
         setUser(prev => prev ? { ...prev, displayName: displayName.trim() } : null);
-        saveUser({ ...getUser(), displayName: displayName.trim() });
+        const currentUser = getUser();
+        if (currentUser) {
+          saveUser({ ...currentUser, displayName: displayName.trim() });
+        }
         setEditing(false);
         setSaveMsg("✅ Name updated!");
       } else {
