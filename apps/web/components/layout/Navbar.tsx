@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 import NotificationBell from "./NotificationBell";
 
 export default function Navbar() {
-  const [user, setUser]         = useState<{ phone: string; displayName?: string } | null>(null);
+  const [user, setUser]         = useState<{ phone?: string; displayName?: string | null } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted]   = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
@@ -112,13 +112,13 @@ export default function Navbar() {
               onClick={() => setMenuOpen(!menuOpen)}
               style={{ width:"36px", height:"36px", borderRadius:"50%", backgroundColor:"#00C89620", border:"1px solid #00C89640", color:"#00C896", fontWeight:700, fontSize:"14px", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}
             >
-              {(user.displayName || user.phone).slice(-2).toUpperCase()}
+              (user.displayName || user.phone || "").slice(-2).toUpperCase()
             </button>
             {menuOpen && (
               <div style={{ position:"absolute", right:0, top:"44px", width:"190px", backgroundColor:"#161616", border:"1px solid #2A2A2A", borderRadius:"12px", overflow:"hidden", zIndex:100 }}>
                 <div style={{ padding:"12px 16px", borderBottom:"1px solid #2A2A2A" }}>
                   <div style={{ fontSize:"12px", color:"#555" }}>Logged in as</div>
-                  <div style={{ fontSize:"13px", color:"#fff", fontWeight:600 }}>{user.displayName || user.phone}</div>
+                  <div style={{ fontSize:"13px", color:"#fff", fontWeight:600 }}>{user.displayName || user.phone || ""}</div>
                 </div>
                 <Link href="/profile" onClick={() => setMenuOpen(false)} style={{ display:"block", padding:"12px 16px", fontSize:"13px", color:"#888", textDecoration:"none", borderBottom:"1px solid #2A2A2A" }}>
                   👤 My Profile

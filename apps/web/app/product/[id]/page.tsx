@@ -60,7 +60,7 @@ export default function ProductDetailPage() {
         setVerdict(d.verdict || null);
         const defaults: Record<string, string> = {};
         for (const [type, values] of Object.entries(d.listing?.variants || {})) {
-          if (values[0]) defaults[type] = values[0];
+          if (Array.isArray(values) && typeof values[0] === "string") defaults[type] = values[0];
         }
         setSelectedVariants(defaults);
       })
